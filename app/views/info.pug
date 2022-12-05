@@ -1,4 +1,9 @@
 extends layout
 
 block content
-  h1 Open Information
+  .container
+    h1 Information
+    if(session.auth.isAuth)
+      p="Estás logueado "+session.auth.info.nombre
+    else
+      p No estás logueado

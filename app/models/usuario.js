@@ -3,6 +3,7 @@ var mongoose = require("mongoose"),
 
 var UsuarioSchema = new Schema({
     id      : {type:Number, required:true},
+    nombre  : {type:String, required:true},
     usuario : {type:String, required:true},
     password: {type:String, required:true},
     rol     : {type:String, required:true}

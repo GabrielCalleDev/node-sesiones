@@ -7,7 +7,24 @@ html
 
 
   body
+    nav
+      ul
+        li
+          a(href='/') Login
+        li
+          a(href='/info') Info
+        li
+          a(href='/admin/welcome') Admin Welcome
+        li
+          a(href='/admin/info') Admin Info
+        li
+          a(href='/admin/user/10') User information
+        li
+          a(href='/admin/user/create') Create user
+        li
+          a(href='/logout') Logout
     block content
 
+    script(src="/js/jquery-3.6.0.min.js")
     script(src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js")
     script(src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous")
