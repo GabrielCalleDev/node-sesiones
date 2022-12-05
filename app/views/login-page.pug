@@ -1,4 +1,18 @@
 extends layout
 
 block content
-  h1 Login page
+  .container
+    .wrapper.fadeInDown
+      #formContent
+        // Tabs Titles
+        // Icon
+        .fadeIn.first
+          img#icon(src='/img/logo.png' alt='User Icon')
+        // Login Form
+        form(method='post' action='/login')
+          input#login.fadeIn.second(type='text' name='user' placeholder='login')
+          input#password.fadeIn.third(type='text' name='pass' placeholder='password')
+          input.fadeIn.fourth(type='submit' value='Log In')
+        // Remind Passowrd
+        #formFooter
+          a.underlineHover(href='#') Forgot Password?

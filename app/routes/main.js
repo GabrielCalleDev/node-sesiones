@@ -1,12 +1,11 @@
-var express       = require("express");
-var path          = require("path");
-var router        = express.Router();
-var controllerDir = "../controllers";
-
-
+var express            = require("express");
+var path               = require("path");
+var router             = express.Router();
+var controllerDir      = "../controllers";
+var usuariosController = require(controllerDir + "/usuarios")
 
 router.get("/", async (req, res, next) => {
-    console.log(req.session)
+    const resultado = await usuariosController.save();
     res.render("login-page");
 });
 

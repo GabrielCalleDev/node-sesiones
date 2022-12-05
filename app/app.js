@@ -1,10 +1,10 @@
-const port = 3000;
-var express = require("express"),
-  mongoose = require('mongoose'),
-  app = express(),
-  server = require("http").createServer(app),
-  path = require("path"),
-  session = require('express-session');
+const port   = 3000;
+var express  = require("express"),
+    mongoose = require('mongoose'),
+    app      = express(),
+    server   = require("http").createServer(app),
+    path     = require("path"),
+    session  = require('express-session');
 
 // Server starting at port 3000
 server.listen(port, (err, res) => {
@@ -24,7 +24,7 @@ mongoose.connect(
 
 //session middleware
 app.use(session({
-  secret: "gabrielitoelmejor1234567890",
+  secret: "Gabrielito programando node",
   cookie: { maxAge: 24 * 60 * 60 * 1000, secure: false }, // Cookie para 1 día
   resave: true,
   saveUninitialized: true
