@@ -25,8 +25,8 @@ mongoose.connect(
 //session middleware
 app.use(session({
   secret: "gabrielitoelmejor1234567890",
-  cookie: { maxAge: 1000*60*60, secure: false },
-  resave: false,
+  cookie: { maxAge: 24 * 60 * 60 * 1000, secure: false }, // Cookie para 1 día
+  resave: true,
   saveUninitialized: true
 }));
 

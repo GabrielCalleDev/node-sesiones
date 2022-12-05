@@ -3,7 +3,10 @@ var path          = require("path");
 var router        = express.Router();
 var controllerDir = "../controllers";
 
+
+
 router.get("/", async (req, res, next) => {
+    console.log(req.session)
     res.render("login-page");
 });
 
