@@ -56,14 +56,14 @@ exports.delete = async (req) => {
 exports.createAdmin = async () => {
 	try {
 		const usuario = new Usuarios({
-            id: 10,
-            usuario: "admin",
-            nombre: "administrador",
-            password: md5("password"),
-            rol: "admin"
-        })
-        await usuario.save();
-        return usuario;
+			id: 10,
+			usuario: "admin",
+			nombre: "administrador",
+			password: md5("password"),
+			rol: "admin"
+		})
+		await usuario.save();
+		return usuario;
 	} catch (error) {
 		console.error(`Error saving "Usuario" ${error}`);
 	}
