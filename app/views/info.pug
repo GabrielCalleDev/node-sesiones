@@ -3,7 +3,8 @@ extends layout
 block content
   .container
     h1 Information
-    if(session.auth.isAuth)
-      p="Estás logueado "+session.auth.info.nombre
+    if(logueado)
+      p Estás logueado 
+        b(style="text-transform: capitalize;")=nombre
     else
       p No estás logueado

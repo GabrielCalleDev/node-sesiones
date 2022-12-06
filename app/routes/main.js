@@ -18,22 +18,15 @@ router.post('/login', async (req, res) => {
     const usuario = await usuariosController.consultarUserPass(req.body)
     // Si el usuario y contraseña son correctos, establecemos el parametro "auth" en req.session
     if (usuario) {
-        req.session.auth = {
-            isAuth:true,
-            info: {
-                name: usuario.usuario,
-                rol: usuario.rol,
-                nombre: usuario.nombre
-            }
-        }
+        req.session.auth = { isAuth:true, info: { name: usuario.usuario, rol: usuario.rol, nombre: usuario.nombre } }
     }else{
-        req.session.auth = { isAuth: false}
+        req.session.auth = { isAuth: false }
     }
     res.redirect('/info')
 })
 
 router.get('/info', (req, res) => {
-    res.render('info', { session: req.session });
+    res.render('info', { nombre: req.session.auth?.info?.nombre, logueado: req.session?.auth?.isAuth });
 });
 
 router.get('/logout',(req,res) => {
@@ -41,22 +34,25 @@ router.get('/logout',(req,res) => {
     res.redirect('/');
 });
 
-/*Access only if logged in with session */
+/*Access only if logged in with session and rol admin */
 router.use(session.authAdmin)
 
-router.get("/admin/welcome", (req, res) => {
-    res.render("admin/welcome");
+router.get("/admin/welcome", async (req, res) => {
+    const usuarios = await usuariosController.getAll()
+    res.render("admin/welcome", {usuarios:usuarios});
 });
 
 router.get("/admin/info", (req, res) => {
     res.render("admin/info");
 });
 
-router.get("/admin/user/:id", (req, res) => {
-    res.render("admin/show-user");
+router.get("/admin/user/:id", async (req, res) => {
+    const usuario = await usuariosController.show(req.params.id)
+    console.log(usuario)
+    res.render("admin/show-user", {usuario:usuario});
 });
 
-router.get("/admin/user/create", (req, res) => {
+router.get("/admin/create/user", (req, res) => {
     res.render("admin/create-user");
 });
 
@@ -64,8 +60,6 @@ router.post("/admin/user/save", (req, res) => {
     res.redirect('/admin/users')
 });
 
-router.get("/admin/users", (req, res) => {
-    res.render("admin/show-users");
-});
+
 
 module.exports = router;
