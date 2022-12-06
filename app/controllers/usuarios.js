@@ -28,15 +28,37 @@ exports.consultarUserPass = async (parametros) => {
 	}
 }
 
+exports.save = async (req) => {
+	try {
+		const usuario = new Usuarios({
+			id: req.body.id,
+			usuario: req.body.usuario,
+			nombre: req.body.nombre,
+			password: md5(req.body.password),
+			rol: req.body.rol
+		})
+		await usuario.save()
+		return usuario
+	} catch (error) {
+		
+	}
+}
 
+exports.delete = async (req) => {
+	try {
+		const usuario = await Usuarios.deleteOne({_id: req.params.id})
+		return usuario;
+	} catch (error) {
+		console.error(`Error deleting "Usuario" ${error}`)
+	}
+}
 
-
-exports.save = async () => {
+exports.create = async () => {
 	try {
 		const usuario = new Usuarios({
             id: 10,
             usuario: "admin",
-            nombre: "gabriel",
+            nombre: "administrador",
             password: md5("password"),
             rol: "admin"
         })

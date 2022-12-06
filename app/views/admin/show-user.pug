@@ -1,9 +1,12 @@
 extends ../layout
 
 block content
-    if (usuario)
-        h1="Información del usuario "+usuario.usuario+"("+usuario.id+")"
-        ul
-            li="Nombre: " + usuario.nombre
-            li="Usuario: " + usuario.usuario
-            li="Rol: " + usuario.rol
+    .container
+        if (usuario)
+            h1="Información del usuario: "+usuario.usuario+"("+usuario.id+")"
+            ul
+                li="Nombre: " + usuario.nombre
+                li="Usuario: " + usuario.usuario
+                li="Rol: " + usuario.rol
+        else
+            h1="No existe el usuario con id: "+id

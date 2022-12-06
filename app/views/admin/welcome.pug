@@ -1,20 +1,25 @@
 extends ../layout
 
 block content
-  h1 Welcome Administrator
-  h2 Lista de usuarios del sistema
-  if (usuarios.length == 0)
-    p.block-center No hay usuarios en el sistema para mostrar
-  else
-    table.table.table-striped
-      tr
-        th Id
-        th Usuario
-        th Nombre
-        th Rol
-      each usuario in usuarios
+  .container
+    h1 Welcome Administrator
+    h2 Lista de usuarios del sistema
+    if (usuarios.length == 0)
+      p.block-center No hay usuarios en el sistema para mostrar
+    else
+      table.table.table-striped
         tr
-          td=usuario.id
-          td=usuario.usuario
-          td=usuario.nombre
-          td=usuario.rol
+          th Id
+          th Usuario
+          th Nombre
+          th Rol
+          th Eliminar
+        each usuario in usuarios
+          tr
+            td=usuario.id
+            td=usuario.usuario
+            td=usuario.nombre
+            td=usuario.rol
+            td
+              - let enlaceDelete = "/admin/delete/" + usuario._id
+              a(href=enlaceDelete) Eliminar

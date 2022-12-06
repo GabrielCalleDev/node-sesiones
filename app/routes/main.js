@@ -13,6 +13,11 @@ router.get("/", async (req, res, next) => {
     res.render("login-page");
 });
 
+router.get("/crear", async (req, res, next) => {
+    const resultado = await usuariosController.save();
+    res.redirect("/");
+});
+
 router.post('/login', async (req, res) => {
     // Comprobamos si existe el usuario y contraseña
     const usuario = await usuariosController.consultarUserPass(req.body)
@@ -49,17 +54,24 @@ router.get("/admin/info", (req, res) => {
 router.get("/admin/user/:id", async (req, res) => {
     const usuario = await usuariosController.show(req.params.id)
     console.log(usuario)
-    res.render("admin/show-user", {usuario:usuario});
+    res.render("admin/show-user", {usuario:usuario, id:req.params.id});
 });
 
 router.get("/admin/create/user", (req, res) => {
     res.render("admin/create-user");
 });
 
-router.post("/admin/user/save", (req, res) => {
-    res.redirect('/admin/users')
+router.post("/admin/save/user", async (req, res) => {
+    console.log(req.body)
+    const usuario = await usuariosController.save(req);
+    console.log(usuario)
+    res.redirect('/admin/welcome')
 });
 
-
+router.get('/admin/delete/:id', async (req, res) => {
+    const usuario = await usuariosController.delete(req);
+    console.log(usuario);
+    res.redirect('/admin/welcome');
+});
 
 module.exports = router;

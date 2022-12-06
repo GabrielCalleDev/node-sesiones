@@ -1,19 +1,27 @@
 extends ../layout
 
 block content
-    .container
+    .container.mb-3
         .row.justify-content-md-center
             .col-md-6
                 h1.text-center Nuevo usuario
-                form
+                form(method="post" action="/admin/save/user")
                     .mb-3
-                        label.form-label(for='exampleInputEmail1') Email address
-                        input#exampleInputEmail1.form-control(type='email' aria-describedby='emailHelp')
-                        #emailHelp.form-text We&apos;ll never share your email with anyone else.
+                        label.form-label(for='inputUsuario') Usuario
+                        input#inputUsuario.form-control(type='text' name="usuario" placeholder="Introduce un usuario")
                     .mb-3
-                        label.form-label(for='exampleInputPassword1') Password
-                        input#exampleInputPassword1.form-control(type='password')
-                    .mb-3.form-check
-                        input#exampleCheck1.form-check-input(type='checkbox')
-                        label.form-check-label(for='exampleCheck1') Check me out
-                    button.btn.btn-primary(type='submit') Submit
+                        label.form-label(for='inputNombre') Nombre
+                        input#inputNombre.form-control(type='text' name="nombre" placeholder="Introduce un nombre")
+                    .mb-3
+                        label.form-label(for='inputId') Id de usuario
+                        input#inputId.form-control(type='number' name="id" placeholder="Introduce un id")
+                    .mb-3
+                        label.form-label(for='selectRol') Rol de usuario
+                        select#selectRol.form-select(name="rol")
+                            option(selected) Selecciona un rol
+                            option(value='user') Usuario
+                            option(value='admin') Administrador
+                    .mb-3
+                        label.form-label(for='inputPassword') Contraseña
+                        input#inputPassword.form-control(type='password' name="password")
+                    button.btn.btn-primary(type='submit') Registrar usuario
