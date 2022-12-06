@@ -56,7 +56,7 @@ exports.delete = async (req) => {
 exports.createAdmin = async () => {
 	try {
 		const usuario = new Usuarios({
-			id: 10,
+			id: 1,
 			usuario: "admin",
 			nombre: "administrador",
 			password: md5("password"),

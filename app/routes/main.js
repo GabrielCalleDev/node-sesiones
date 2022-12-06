@@ -30,7 +30,10 @@ router.post('/login', async (req, res) => {
 })
 
 router.get('/info', async (req, res) => {
-    const usuarioAdministrador = await usuariosController.show(10)
+    // usuarioAdministrador obtiene el documento de admin(id=1)
+    // Si no existe, la vista muestra un enlace para crearlo. Útil para testear.
+    // Si existe, la vista no muestra ningún enlace
+    const usuarioAdministrador = await usuariosController.show(1) 
     res.render('info', { nombre: req.session.auth?.info?.nombre, logueado: req.session?.auth?.isAuth, admin:usuarioAdministrador });
 });
 
@@ -49,7 +52,6 @@ router.use(session.authAdmin)
 
 router.get("/admin/welcome", async (req, res) => {
     const usuarios = await usuariosController.getAll()
-    console.log(usuarios)
     res.render("admin/welcome", {usuarios:usuarios});
 });
 
