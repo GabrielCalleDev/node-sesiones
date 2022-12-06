@@ -9,7 +9,6 @@ var session            = require('./session')
 router.use(morgan("dev"))
 
 router.get("/", async (req, res, next) => {
-    //const resultado = await usuariosController.save();
     res.render("login-page");
 });
 
@@ -40,7 +39,12 @@ router.get('/logout',(req,res) => {
     res.redirect('/');
 });
 
-/*Access only if logged in with session and rol admin */
+
+/*
+    ***************************************************
+    Access only if logged in with session and rol admin
+    ***************************************************
+*/
 router.use(session.authAdmin)
 
 router.get("/admin/welcome", async (req, res) => {
@@ -52,27 +56,27 @@ router.get("/admin/info", (req, res) => {
     res.render("admin/info");
 });
 
-router.get("/admin/user/:id", async (req, res) => {
-    const usuario = await usuariosController.show(req.params.id)
-    console.log(usuario)
-    res.render("admin/show-user", {usuario:usuario, id:req.params.id});
-});
-
-router.get("/admin/create/user", (req, res) => {
+router.get("/admin/user/create", (req, res) => {
     res.render("admin/create-user");
 });
 
-router.post("/admin/save/user", async (req, res) => {
+router.post("/admin/user/save", async (req, res) => {
     console.log(req.body)
     const usuario = await usuariosController.save(req);
     console.log(usuario)
     res.redirect('/admin/welcome')
 });
 
-router.get('/admin/delete/:id', async (req, res) => {
+router.get('/admin/user/delete/:id', async (req, res) => {
     const usuario = await usuariosController.delete(req);
     console.log(usuario);
     res.redirect('/admin/welcome');
+});
+
+router.get("/admin/user/:id", async (req, res) => {
+    const usuario = await usuariosController.show(req.params.id)
+    console.log(usuario)
+    res.render("admin/show-user", {usuario:usuario, id:req.params.id});
 });
 
 module.exports = router;
