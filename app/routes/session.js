@@ -1,9 +1,12 @@
 // Funciones para administrar las sesiones
 
 exports.authAdmin = function(req, res, next) {
-    console.log(req.session)
-    if ( req.session.auth && req.session.auth?.info?.rol === "admin")
+    if ( req.session.auth && req.session.auth?.info?.rol === "admin"){
+        console.log("\x1b[42m","[ 200 ]: accesso permitido", "\x1b[0m")
+        console.log(req.session.auth)
         return next();
-    else
+    }else{
+        console.log("\x1b[41m","[ 401 ]: accesso prohibido", "\x1b[0m")
         return res.render('forbidden');
+    }
 };

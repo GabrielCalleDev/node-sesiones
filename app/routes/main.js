@@ -49,6 +49,7 @@ router.use(session.authAdmin)
 
 router.get("/admin/welcome", async (req, res) => {
     const usuarios = await usuariosController.getAll()
+    console.log(usuarios)
     res.render("admin/welcome", {usuarios:usuarios});
 });
 
@@ -61,7 +62,6 @@ router.get("/admin/user/create", (req, res) => {
 });
 
 router.post("/admin/user/save", async (req, res) => {
-    console.log(req.body)
     const usuario = await usuariosController.save(req);
     console.log(usuario)
     res.redirect('/admin/welcome')
