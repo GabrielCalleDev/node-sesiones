@@ -8,13 +8,8 @@ var session            = require('./session')
 
 router.use(morgan("dev"))
 
-router.get("/", async (req, res, next) => {
+router.get("/", (req, res) => {
     res.render("login-page");
-});
-
-router.get("/crear-admin", async (req, res, next) => {
-    await usuariosController.createAdmin();
-    res.redirect("/");
 });
 
 router.post('/login', async (req, res) => {
@@ -31,10 +26,15 @@ router.post('/login', async (req, res) => {
 
 router.get('/info', async (req, res) => {
     // usuarioAdministrador obtiene el documento de admin(id=1)
-    // Si no existe, la vista muestra un enlace para crearlo. Útil para testear.
+    // Si no existe, la vista muestra un enlace para crearlo. Útil para testear. Destino de ruta: /crear-admin
     // Si existe, la vista no muestra ningún enlace
     const usuarioAdministrador = await usuariosController.show(1) 
     res.render('info', { nombre: req.session.auth?.info?.nombre, logueado: req.session?.auth?.isAuth, admin:usuarioAdministrador });
+});
+
+router.get("/crear-admin", async (req, res) => {
+    await usuariosController.createAdmin();
+    res.redirect("/");
 });
 
 router.get('/logout',(req,res) => {
