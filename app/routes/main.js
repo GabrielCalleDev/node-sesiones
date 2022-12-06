@@ -13,8 +13,8 @@ router.get("/", async (req, res, next) => {
     res.render("login-page");
 });
 
-router.get("/crear", async (req, res, next) => {
-    const resultado = await usuariosController.save();
+router.get("/crear-admin", async (req, res, next) => {
+    await usuariosController.createAdmin();
     res.redirect("/");
 });
 
@@ -30,8 +30,9 @@ router.post('/login', async (req, res) => {
     res.redirect('/info')
 })
 
-router.get('/info', (req, res) => {
-    res.render('info', { nombre: req.session.auth?.info?.nombre, logueado: req.session?.auth?.isAuth });
+router.get('/info', async (req, res) => {
+    const usuarioAdministrador = await usuariosController.show(10)
+    res.render('info', { nombre: req.session.auth?.info?.nombre, logueado: req.session?.auth?.isAuth, admin:usuarioAdministrador });
 });
 
 router.get('/logout',(req,res) => {

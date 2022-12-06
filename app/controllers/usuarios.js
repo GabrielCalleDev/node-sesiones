@@ -53,7 +53,7 @@ exports.delete = async (req) => {
 	}
 }
 
-exports.create = async () => {
+exports.createAdmin = async () => {
 	try {
 		const usuario = new Usuarios({
             id: 10,
