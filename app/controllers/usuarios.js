@@ -19,7 +19,7 @@ exports.show = async (id) => {
 	}
 }
 
-exports.consultarUserPass = async (parametros) => {
+exports.comprobarUserPass = async (parametros) => {
 	try {
 		const usuario = await Usuarios.findOne({ usuario: parametros.usuario, password: md5(parametros.password)})
 		return usuario
