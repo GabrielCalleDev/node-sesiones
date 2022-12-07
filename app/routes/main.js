@@ -1,7 +1,6 @@
-var express            = require("express");
-var path               = require("path");
-var router             = express.Router();
-var controllerDir      = "../controllers";
+var express            = require("express")
+var router             = express.Router()
+var controllerDir      = "./../controllers"
 var usuariosController = require(controllerDir + "/usuarios")
 var morgan             = require("morgan")
 var session            = require('./session')
@@ -9,15 +8,16 @@ var session            = require('./session')
 router.use(morgan("dev"))
 
 router.get("/", (req, res) => {
-    res.render("login-page");
+    res.render("login-page")
 });
 
 router.post('/login', async (req, res) => {
-    // Comprobamos si existe el usuario y contraseña
-    const usuario = await usuariosController.consultarUserPass(req.body)
-    // Si el usuario y contraseña son correctos, establecemos el parametro "auth" en req.session
+    const usuario = await usuariosController.comprobarUserPass(req.body)
     if (usuario) {
-        req.session.auth = { isAuth:true, info: { name: usuario.usuario, rol: usuario.rol, nombre: usuario.nombre } }
+        req.session.auth = { 
+            isAuth:true, 
+            info: { name: usuario.usuario, rol: usuario.rol, nombre: usuario.nombre } 
+        }
     }else{
         req.session.auth = { isAuth: false }
     }
@@ -25,21 +25,27 @@ router.post('/login', async (req, res) => {
 })
 
 router.get('/info', async (req, res) => {
-    // usuarioAdministrador obtiene el documento de admin(id=1)
-    // Si no existe, la vista muestra un enlace para crearlo. Útil para testear. Destino de ruta: /crear-admin
-    // Si existe, la vista no muestra ningún enlace
+    /**
+     * Para testear nuestra aplicación, cuando se accede a info nos da la opcion
+     * de crear el usuario administrador si esté no existe. admin/password con id = 1
+     * 
+     * Si el usuario 'admin' no existe, en la vista aparece un enlace para crearlo. Enlace a: /crear-admin
+     * Si el usuario 'admin' existe, la vista ya no muestra la opción de crearlo
+     * 
+     * Esto se controla obteniendo el documento de admin en la constante: "usuarioAdministrador"
+     */
     const usuarioAdministrador = await usuariosController.show(1) 
-    res.render('info', { nombre: req.session.auth?.info?.nombre, logueado: req.session?.auth?.isAuth, admin:usuarioAdministrador });
+    res.render('info', { nombre: req.session.auth?.info?.nombre, logueado: req.session?.auth?.isAuth, admin:usuarioAdministrador })
 });
 
 router.get("/crear-admin", async (req, res) => {
-    await usuariosController.createAdmin();
-    res.redirect("/");
+    await usuariosController.createAdmin()
+    res.redirect("/")
 });
 
 router.get('/logout',(req,res) => {
-    req.session.destroy();
-    res.redirect('/');
+    req.session.destroy()
+    res.redirect('/')
 });
 
 
@@ -48,37 +54,39 @@ router.get('/logout',(req,res) => {
     Access only if logged in with session and rol admin
     ***************************************************
 */
+
+// Se aplica el middleware a todas las rutas siguientes
 router.use(session.authAdmin)
 
 router.get("/admin/welcome", async (req, res) => {
     const usuarios = await usuariosController.getAll()
-    res.render("admin/welcome", {usuarios:usuarios});
+    res.render("admin/welcome", {usuarios:usuarios})
 });
 
 router.get("/admin/info", (req, res) => {
-    res.render("admin/info");
+    res.render("admin/info")
 });
 
 router.get("/admin/user/create", (req, res) => {
-    res.render("admin/create-user");
+    res.render("admin/create-user")
 });
 
 router.post("/admin/user/save", async (req, res) => {
-    const usuario = await usuariosController.save(req);
+    const usuario = await usuariosController.save(req)
     console.log(usuario)
     res.redirect('/admin/welcome')
 });
 
 router.get('/admin/user/delete/:id', async (req, res) => {
-    const usuario = await usuariosController.delete(req);
-    console.log(usuario);
-    res.redirect('/admin/welcome');
+    const usuario = await usuariosController.delete(req)
+    console.log(usuario)
+    res.redirect('/admin/welcome')
 });
 
 router.get("/admin/user/:id", async (req, res) => {
     const usuario = await usuariosController.show(req.params.id)
     console.log(usuario)
-    res.render("admin/show-user", {usuario:usuario, id:req.params.id});
+    res.render("admin/show-user", {usuario:usuario, id:req.params.id})
 });
 
 module.exports = router;

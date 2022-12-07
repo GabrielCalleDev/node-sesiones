@@ -1,5 +1,5 @@
-const Usuarios = require("../models/usuario");
-const md5      = require("md5");
+const Usuarios = require("../models/usuario")
+const md5      = require("md5")
 
 exports.getAll = async () => {
 	try {
@@ -21,10 +21,10 @@ exports.show = async (id) => {
 
 exports.consultarUserPass = async (parametros) => {
 	try {
-		const usuario = await Usuarios.findOne({ usuario: parametros.usuario, password: md5(parametros.password)});
-		return usuario;
+		const usuario = await Usuarios.findOne({ usuario: parametros.usuario, password: md5(parametros.password)})
+		return usuario
 	} catch (error) {
-		console.error(`Error getting "Usuario" ${error}`);
+		console.error(`Error getting "Usuario" ${error}`)
 	}
 }
 
@@ -40,14 +40,14 @@ exports.save = async (req) => {
 		await usuario.save()
 		return usuario
 	} catch (error) {
-		
+		console.error(`Error saving "Usuario" ${error}`)
 	}
 }
 
 exports.delete = async (req) => {
 	try {
 		const usuario = await Usuarios.deleteOne({_id: req.params.id})
-		return usuario;
+		return usuario
 	} catch (error) {
 		console.error(`Error deleting "Usuario" ${error}`)
 	}
@@ -62,9 +62,9 @@ exports.createAdmin = async () => {
 			password: md5("password"),
 			rol: "admin"
 		})
-		await usuario.save();
-		return usuario;
+		await usuario.save()
+		return usuario
 	} catch (error) {
-		console.error(`Error saving "Usuario" ${error}`);
+		console.error(`Error saving "Usuario" ${error}`)
 	}
 }

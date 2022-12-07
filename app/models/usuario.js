@@ -1,5 +1,5 @@
 var mongoose = require("mongoose"),
-    Schema   = mongoose.Schema;
+    Schema   = mongoose.Schema
 
 var UsuarioSchema = new Schema({
     id       : { type:Number, required:true },
@@ -7,8 +7,8 @@ var UsuarioSchema = new Schema({
     usuario  : { type:String, required:true },
     password : { type:String, required:true },
     rol      : { type:String, required:true }
-});
+})
 
-UsuarioSchema.set('timestamps', true);
+UsuarioSchema.set('timestamps', true)
 
-module.exports = mongoose.model("Usuario", UsuarioSchema);
+module.exports = mongoose.model("Usuario", UsuarioSchema)
