@@ -19,12 +19,19 @@ exports.show = async (id) => {
 	}
 }
 
-exports.comprobarUserPass = async (parametros) => {
+exports.comprobarUserPass = async (req) => {
 	try {
-		const usuario = await Usuarios.findOne({ usuario: parametros.usuario, password: md5(parametros.password)})
-		return usuario
+		const usuario = await Usuarios.findOne({ usuario: req.body.usuario, password: md5(req.body.password)})
+		if (usuario) {
+			req.session.auth = { 
+				isAuth:true, 
+				info: { name: usuario.usuario, rol: usuario.rol, nombre: usuario.nombre } 
+			}
+		}else{
+			req.session.auth = { isAuth: false }
+		}
 	} catch (error) {
-		console.error(`Error getting "Usuario" ${error}`)
+		console.error(`Error checking "Usuario" ${error}`)
 	}
 }
 

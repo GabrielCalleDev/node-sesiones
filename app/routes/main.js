@@ -5,22 +5,23 @@ var usuariosController = require(controllerDir + "/usuarios")
 var morgan             = require("morgan")
 var session            = require('./session')
 
+// Middleware para mostrar las peticiones de la app
 router.use(morgan("dev"))
+// Middleware para corregir "undefined"
+router.use(session.replaceUndefinedReqs)
+// Middleware para todas las rutas /admin
+router.use('/admin', session.authAdmin)
+
+/**
+ * Rutas de la aplicación
+ */
 
 router.get("/", (req, res) => {
     res.render("login-page")
 });
 
 router.post('/login', async (req, res) => {
-    const usuario = await usuariosController.comprobarUserPass(req.body)
-    if (usuario) {
-        req.session.auth = { 
-            isAuth:true, 
-            info: { name: usuario.usuario, rol: usuario.rol, nombre: usuario.nombre } 
-        }
-    }else{
-        req.session.auth = { isAuth: false }
-    }
+    await usuariosController.comprobarUserPass(req)
     res.redirect('/info')
 })
 
@@ -35,7 +36,7 @@ router.get('/info', async (req, res) => {
      * Esto se controla obteniendo el documento de admin en la constante: "usuarioAdministrador"
      */
     const usuarioAdministrador = await usuariosController.show(1) 
-    res.render('info', { nombre: req.session.auth?.info?.nombre, logueado: req.session?.auth?.isAuth, admin:usuarioAdministrador })
+    res.render('info', { nombre: req.session.auth.info.nombre, logueado: req.session.auth.isAuth, admin:usuarioAdministrador })
 });
 
 router.get("/crear-admin", async (req, res) => {
@@ -54,9 +55,6 @@ router.get('/logout',(req,res) => {
     Access only if logged in with session and rol admin
     ***************************************************
 */
-
-// Se aplica el middleware a todas las rutas siguientes
-router.use(session.authAdmin)
 
 router.get("/admin/welcome", async (req, res) => {
     const usuarios = await usuariosController.getAll()
