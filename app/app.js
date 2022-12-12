@@ -24,14 +24,11 @@ mongoose.connect(
 
 //session middleware
 app.use(session({
-  secret: "Gabrielito programando node",
+  secret: "Gabriel programando node.js",
   cookie: { maxAge: 24 * 60 * 60 * 1000, secure: false }, // Cookie para 1 día
   resave: true,
   saveUninitialized: true
 }))
-
-// Import routes of our app
-var routes = require("./routes/main")
 
 // view engine setup and other configurations
 app.set("views", path.join(__dirname,"views"))
@@ -40,6 +37,9 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, "public")))
 
-// Define routes using URL path
+// Import routes of our app
+var routes = require("./routes/main")
+// mount the routes on the app
 app.use("/", routes)
+
 module.exports = app

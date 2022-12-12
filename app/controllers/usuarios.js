@@ -21,11 +21,18 @@ exports.show = async (id) => {
 
 exports.comprobarUserPass = async (req) => {
 	try {
-		const usuario = await Usuarios.findOne({ usuario: req.body.usuario, password: md5(req.body.password)})
+		const usuario = await Usuarios.findOne({ 
+			usuario: req.body.usuario, 
+			password: md5(req.body.password)
+		})
 		if (usuario) {
 			req.session.auth = { 
 				isAuth:true, 
-				info: { name: usuario.usuario, rol: usuario.rol, nombre: usuario.nombre } 
+				info: { 
+					name: usuario.usuario,
+					rol: usuario.rol,
+					nombre: usuario.nombre 
+				} 
 			}
 		}else{
 			req.session.auth = { isAuth: false }
@@ -60,18 +67,20 @@ exports.delete = async (req) => {
 	}
 }
 
-exports.createAdmin = async () => {
+exports.crearAdminSinoExiste = async () => {
 	try {
-		const usuario = new Usuarios({
-			id: 1,
-			usuario: "admin",
-			nombre: "administrador",
-			password: md5("password"),
-			rol: "admin"
-		})
-		await usuario.save()
-		return usuario
+		const administrador = await Usuarios.findOne({ usuario:'admin' })
+		if(!administrador){
+			const usuario = new Usuarios({
+				id: 1,
+				usuario: "admin",
+				nombre: "administrador",
+				password: md5("password"),
+				rol: "admin"
+			})
+			await usuario.save()
+		}
 	} catch (error) {
-		console.error(`Error saving "Usuario" ${error}`)
+		console.error(`Error creating "Administrador" ${error}`)
 	}
 }
