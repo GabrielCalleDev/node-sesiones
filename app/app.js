@@ -1,10 +1,12 @@
+"use strict"
+
 const port   = 3000
-var express  = require("express"),
-    mongoose = require('mongoose'),
-    app      = express(),
-    server   = require("http").createServer(app),
-    path     = require("path"),
-    session  = require('express-session')
+const express  = require("express"),
+  mongoose = require('mongoose'),
+  app      = express(),
+  server   = require("http").createServer(app),
+  path     = require("path"),
+  session  = require('express-session')
 
 // Server starting at port 3000
 server.listen(port, (err, res) => {
@@ -38,7 +40,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, "public")))
 
 // Import routes of our app
-var routes = require("./routes/main")
+const routes = require("./routes/main")
 // mount the routes on the app
 app.use("/", routes)
 

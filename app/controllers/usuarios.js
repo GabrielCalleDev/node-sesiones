@@ -1,3 +1,5 @@
+"use strict"
+
 const Usuarios = require("../models/usuario")
 const md5      = require("md5")
 

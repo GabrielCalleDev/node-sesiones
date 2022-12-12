@@ -1,8 +1,10 @@
-var express            = require("express")
-var router             = express.Router()
-var usuariosController = require("./../controllers/usuarios")
-var morgan             = require("morgan")
-var session            = require('./session')
+"use strict"
+
+const express          = require("express"),
+    router             = express.Router(),
+    usuariosController = require("./../controllers/usuarios"),
+    morgan             = require("morgan"),
+    session            = require('./session')
 
 // Middleware para mostrar las peticiones de la app
 router.use(morgan("dev"))

@@ -1,3 +1,5 @@
+"use strict"
+
 // Formato de colores a imprimir por consola
 const danger  = "\x1b[41m"
 const success = "\x1b[42m"

@@ -1,7 +1,9 @@
-var mongoose = require("mongoose"),
-    Schema   = mongoose.Schema
+"use strict"
 
-var UsuarioSchema = new Schema({
+const mongoose = require("mongoose"),
+    Schema   = mongoose.Schema
+    
+const UsuarioSchema = new Schema({
     id       : { type:Number, required:true },
     nombre   : { type:String, required:true },
     usuario  : { type:String, required:true },
